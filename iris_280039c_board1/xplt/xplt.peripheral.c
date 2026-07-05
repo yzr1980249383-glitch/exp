@@ -83,6 +83,7 @@ void initI2C()
 }
 
 
+adc_channel_t input_wave_adc;//adc init用到的变量定义
 
 // User should setup all the peripheral in this function.
 void setup_peripheral(void)
@@ -118,6 +119,9 @@ void setup_peripheral(void)
 
     gpio_beep = IRIS_GPIO1;
 
+
+    //ADC INIT
+    ctl_init_adc_channel(&input_wave_adc,4.0f,0.5f，12,24);//初始化，3.3V->1,1.65V/2为单位1标幺，相当于增益为4
 }
 
 

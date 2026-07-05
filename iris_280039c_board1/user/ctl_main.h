@@ -25,7 +25,6 @@
 
 #ifdef __cplusplus
 extern "C"
-{
 #endif // __cplusplus
 
 //=================================================================================================
@@ -51,7 +50,7 @@ void clear_all_controllers();
 // periodic callback function things.
 GMP_STATIC_INLINE void ctl_dispatch(void)
 {
-    ctl_step_lead()
+    ctl_step_lead();
 }
 
 #ifdef __cplusplus

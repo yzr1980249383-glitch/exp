@@ -12,6 +12,8 @@
 
 #include <xplt.peripheral.h>
 
+#include <ctl/component/interface/adc_channel.h>//用到adc_channel功能，记得调用库
+
 #ifndef _FILE_CTL_INTERFACE_H_
 #define _FILE_CTL_INTERFACE_H_
 
@@ -23,12 +25,16 @@ extern "C"
 //=================================================================================================
 // Controller interface
 
+extern adc_channel_t input_wave_adc;//adc init后，变量在头文件再声明
+
 // Input Callback
 GMP_STATIC_INLINE void ctl_input_callback(void)
 {
-    ctl_init_adc_channel(&input_wave_adc,4.0f,1.65f,)
+    //初始化放在xplt.peripheral.c中//
+    //ctl_init_adc_channel(&input_wave_adc,4.0f,0.5f，12,24);//初始化，3.3V->1,1.65V/2为单位1标幺，相当于增益为4
 
-    ADC_readResult()
+    ctl_step_adc_channel(&input_wave_adc,ADC_readResult(INPUT_WAVE_RESULT_REG,INPUT_WAVE));//标幺
+
 
 }
 
