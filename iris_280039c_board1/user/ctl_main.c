@@ -28,8 +28,10 @@
 // global controller variables
 
 ctl_lead_t lead_comp;
-
+ctl_lead_t lead_comp2;
 ctrl_gt comp_out;//控制器输出结果定义
+uint16_t cur_val_lead_comp = 1;
+ctrl_gt target_lead_angle = 3.1415926f/4;
 
 //=================================================================================================
 // CTL initialize routine
@@ -37,7 +39,7 @@ ctrl_gt comp_out;//控制器输出结果定义
 void ctl_init()
 {
 
-    ctl_init_lead_form3(&lead_comp,3.1415926f/4,100.0f,CONTROLLER_FREQUENCY);//初始化补偿器，form3符合已知参数：fs、45°、gain=1
+    ctl_init_lead_form3(&lead_comp,target_lead_angle,100.0f,CONTROLLER_FREQUENCY);//初始化补偿器，form3符合已知参数：fs、45°、gain=1
 
 }
 
