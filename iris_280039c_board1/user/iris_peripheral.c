@@ -88,7 +88,7 @@ gmp_task_status_t tsk_LED_flush(gmp_task_t* tsk)
     // if meets error, close this task
     if (ret != GMP_EC_OK)
     {
-        tsk->is_enabled = 0;
+        return GMP_TASK_DONE;
     }
 
     return GMP_TASK_DONE;
@@ -111,7 +111,7 @@ gmp_task_status_t tsk_key_flush(gmp_task_t* tsk)
     // if meets error, close this task
     if (ret != GMP_EC_OK)
     {
-        tsk->is_enabled = 0;
+        return GMP_TASK_DONE;
     }
 
     if (key_id != 0)
