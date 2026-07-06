@@ -148,13 +148,18 @@ gmp_task_status_t tsk_blink(gmp_task_t* tsk)
     }
 
     static uint16_t index;
+    extern uint16_t target_lead_angle_deg;
+    extern uint16_t cur_lead_angle_deg;
 
     char output_msg[32];
 
     if (flag_init_cmpt == 1)
     {
-        sprintf(output_msg, "index: %d C", index++);
-        oled_show_str(0,2,output_msg);
+        sprintf(output_msg, "Lead:%3d deg", cur_lead_angle_deg);
+        oled_show_str(0, 0, output_msg);
+
+        sprintf(output_msg, "Set :%3d deg", target_lead_angle_deg);
+        oled_show_str(0, 2, output_msg);
     }
 
     return GMP_TASK_DONE;

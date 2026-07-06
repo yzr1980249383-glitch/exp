@@ -32,6 +32,8 @@ ctl_lead_t lead_comp2;
 ctrl_gt comp_out;//控制器输出结果定义
 uint16_t cur_val_lead_comp = 1;
 ctrl_gt target_lead_angle = 3.1415926f/4;
+uint16_t target_lead_angle_deg = 45;
+uint16_t cur_lead_angle_deg = 45;
 
 //=================================================================================================
 // CTL initialize routine

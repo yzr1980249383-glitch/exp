@@ -98,6 +98,8 @@ extern ctrl_gt target_lead_angle;
 extern ctl_lead_t lead_comp;
 extern ctl_lead_t lead_comp2;
 extern uint16_t cur_val_lead_comp;
+extern uint16_t target_lead_angle_deg;
+extern uint16_t cur_lead_angle_deg;
 
 gmp_task_status_t tsk_key_flush(gmp_task_t* tsk)
 {
@@ -116,6 +118,7 @@ gmp_task_status_t tsk_key_flush(gmp_task_t* tsk)
     {
         // 键盘输入作为控制器的补偿相角，用乒乓的方式改参数
         target_lead_angle = key_id/180.0f * 3.1415926f;
+        target_lead_angle_deg = key_id;
         if(cur_val_lead_comp == 1)
         {
             ctl_init_lead_form3(&lead_comp2,target_lead_angle,100.0f,CONTROLLER_FREQUENCY);
@@ -126,6 +129,7 @@ gmp_task_status_t tsk_key_flush(gmp_task_t* tsk)
             ctl_init_lead_form3(&lead_comp,target_lead_angle,100.0f,CONTROLLER_FREQUENCY);
             cur_val_lead_comp = 1;
         }
+        cur_lead_angle_deg = target_lead_angle_deg;
         // response key message
         update_led_content_8byte(dev, led_lut[4], led_lut[5], led_lut[0], led_lut[0], led_lut[20], led_lut[key_id / 10],
                                  led_lut[key_id % 10], led_lut[20]);
