@@ -27,13 +27,15 @@
 //=================================================================================================
 // global controller variables
 
-
+ctl_lead_t lead_comp;
 
 //=================================================================================================
 // CTL initialize routine
 
 void ctl_init()
 {
+
+    ctl_init_lead_form3(&lead_comp,3.1415926f/4,100.0f,CONTROLLER_FREQUENCY);//初始化补偿器，form3符合已知参数：fs、45°、gain=1
 
 }
 

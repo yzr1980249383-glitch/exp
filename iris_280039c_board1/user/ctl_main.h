@@ -11,6 +11,8 @@
 
 #include <xplt.peripheral.h>
 
+#include <ctl/component/intrinsic/discrete/lead_lag.h>
+
 //=================================================================================================
 // include Necessary control modules
 
@@ -32,14 +34,11 @@ extern "C"
 
 
 
-
 //=================================================================================================
 // function prototype
 
 void ctl_init(void);
-{
-    ctl_init_lead_form3(&lead_comp,3.1415926f/4,100.0f,CONTROLLER_FREQUENCY);
-}
+
 void ctl_mainloop(void);
 
 void clear_all_controllers();
@@ -47,10 +46,13 @@ void clear_all_controllers();
 //=================================================================================================
 // controller process
 
+extern ctl_lead_t lead_comp;//先申明变量
+extern adc_channel_t input_wave_adc;
+
 // periodic callback function things.
 GMP_STATIC_INLINE void ctl_dispatch(void)
 {
-    ctl_step_lead();
+    ctl_step_lead(&lead_comp,input_wave_adc.control_port.value);//对标幺后信号做超前补偿，同理&lead_comp要在这里上面先声明;然后去main.c中初始化补偿器
 }
 
 #ifdef __cplusplus
