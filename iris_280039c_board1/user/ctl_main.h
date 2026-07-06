@@ -48,11 +48,12 @@ void clear_all_controllers();
 
 extern ctl_lead_t lead_comp;//先申明变量
 extern adc_channel_t input_wave_adc;
+extern ctrl_gt comp_out;
 
 // periodic callback function things.
 GMP_STATIC_INLINE void ctl_dispatch(void)
 {
-    ctl_step_lead(&lead_comp,input_wave_adc.control_port.value);//对标幺后信号做超前补偿，同理&lead_comp要在这里上面先声明;然后去main.c中初始化补偿器
+    comp_out = ctl_step_lead(&lead_comp,input_wave_adc.control_port.value);//对标幺后信号做超前补偿，同理&lead_comp要在这里上面先声明;然后去main.c中初始化补偿器
 }
 
 #ifdef __cplusplus

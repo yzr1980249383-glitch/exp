@@ -84,6 +84,7 @@ void initI2C()
 
 
 adc_channel_t input_wave_adc;//adc init用到的变量定义
+pwm_channel_t output_pwm_1;
 
 // User should setup all the peripheral in this function.
 void setup_peripheral(void)
@@ -122,6 +123,8 @@ void setup_peripheral(void)
 
     //ADC INIT
     ctl_init_adc_channel(&input_wave_adc,4.0f,0.5f,12,24);//初始化，3.3V->1,1.65V/2为单位1标幺，相当于增益为4
+
+    ctl_init_pwm_channel (&output_pwm_1, 0, CTRL_PWM_CMP_MAX);//0相移，满量程查 time base 为3000，需去setting更改
 }
 
 

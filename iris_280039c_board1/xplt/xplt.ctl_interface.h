@@ -13,6 +13,7 @@
 #include <xplt.peripheral.h>
 
 #include <ctl/component/interface/adc_channel.h>//用到adc_channel功能，记得调用库
+#include <ctl/component/interface/pwm_channel.h>
 
 #ifndef _FILE_CTL_INTERFACE_H_
 #define _FILE_CTL_INTERFACE_H_
@@ -27,6 +28,7 @@ extern "C"
 
 extern adc_channel_t input_wave_adc;//adc init后，变量在头文件再声明
 extern ctrl_gt comp_out;//再声明
+extern pwm_channel_t output_pwm_1;
 
 // Input Callback
 GMP_STATIC_INLINE void ctl_input_callback(void)
@@ -54,6 +56,8 @@ GMP_STATIC_INLINE void ctl_output_callback(void)
     //DAC_setShadowValue(IRIS_DACB_BASE, iuvw.control_port.value.dat[phase_C] * 2048 + 2048);
 
     DAC_setShadowValue(IRIS_DACB_BASE, comp_out * 1024 + 2048);
+
+    ctl_step_pwm_channel (&output_pwm_1, (comp_out + 1.0f)/2);//PWM输出
 }
 
 // function prototype
