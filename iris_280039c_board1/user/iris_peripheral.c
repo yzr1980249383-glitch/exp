@@ -140,6 +140,72 @@ gmp_task_status_t tsk_key_flush(gmp_task_t* tsk)
     return GMP_TASK_DONE;
 }
 
+#define USER_EQEP_BASE             IRIS_EQEP1_BASE
+#define USER_EQEP_POSITION_MAX     10000L
+#define USER_EQEP_COUNTS_PER_DEG   4L
+#define USER_LEAD_ANGLE_MIN_DEG    0L
+#define USER_LEAD_ANGLE_MAX_DEG    90L
+
+gmp_task_status_t tsk_eqep_flush(gmp_task_t* tsk)
+{
+    GMP_UNUSED_VAR(tsk);
+
+    static uint16_t is_first_run = 1;
+    static int32_t last_pos = 0;
+    static int32_t count_acc = 0;
+
+    int32_t pos = (int32_t)EQEP_getPosition(USER_EQEP_BASE);
+
+    if (is_first_run)
+    {
+        last_pos = pos;
+        is_first_run = 0;
+        return GMP_TASK_DONE;
+    }
+
+    int32_t delta = pos - last_pos;
+    last_pos = pos;
+
+    if (delta > (USER_EQEP_POSITION_MAX / 2L))
+        delta -= (USER_EQEP_POSITION_MAX + 1L);
+    else if (delta < -(USER_EQEP_POSITION_MAX / 2L))
+        delta += (USER_EQEP_POSITION_MAX + 1L);
+
+    count_acc += delta;
+
+    int32_t angle_step = count_acc / USER_EQEP_COUNTS_PER_DEG;
+    if (angle_step == 0)
+        return GMP_TASK_DONE;
+
+    count_acc -= angle_step * USER_EQEP_COUNTS_PER_DEG;
+
+    int32_t angle_deg = (int32_t)target_lead_angle_deg + angle_step;
+    if (angle_deg < USER_LEAD_ANGLE_MIN_DEG)
+        angle_deg = USER_LEAD_ANGLE_MIN_DEG;
+    else if (angle_deg > USER_LEAD_ANGLE_MAX_DEG)
+        angle_deg = USER_LEAD_ANGLE_MAX_DEG;
+
+    if ((uint16_t)angle_deg == target_lead_angle_deg)
+        return GMP_TASK_DONE;
+
+    target_lead_angle_deg = (uint16_t)angle_deg;
+    target_lead_angle = target_lead_angle_deg / 180.0f * 3.1415926f;
+
+    if (cur_val_lead_comp == 1)
+    {
+        ctl_init_lead_form3(&lead_comp2, target_lead_angle, 100.0f, CONTROLLER_FREQUENCY);
+        cur_val_lead_comp = 0;
+    }
+    else
+    {
+        ctl_init_lead_form3(&lead_comp, target_lead_angle, 100.0f, CONTROLLER_FREQUENCY);
+        cur_val_lead_comp = 1;
+    }
+
+    cur_lead_angle_deg = target_lead_angle_deg;
+
+    return GMP_TASK_DONE;
+}
 //=================================================================================================
 // FPGA control function
 

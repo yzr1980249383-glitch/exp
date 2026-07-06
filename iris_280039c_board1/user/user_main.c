@@ -179,6 +179,7 @@ gmp_task_t tasks[] = {
     {"flush_key", tsk_key_flush, 100, 10, 1, (void*)&ht16k33},
     {"flush_led", tsk_LED_flush, 500, 200, 1, (void*)&ht16k33},
     {"startup", tsk_startup, 250, 0, 1, NULL},
+    {"flush_eqep", tsk_eqep_flush, 50, 20, 1, NULL},
 };
 
 //=================================================================================================
