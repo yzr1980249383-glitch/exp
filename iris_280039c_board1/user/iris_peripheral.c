@@ -112,7 +112,7 @@ gmp_task_status_t tsk_key_flush(gmp_task_t* tsk)
     {
 
         // response key message
-        update_led_content_8byte(dev, led_lut[2], led_lut[0], led_lut[2], led_lut[6], led_lut[20], led_lut[key_id / 10],
+        update_led_content_8byte(dev, led_lut[4], led_lut[5], led_lut[0], led_lut[0], led_lut[20], led_lut[key_id / 10],
                                  led_lut[key_id % 10], led_lut[20]);
 
         gmp_base_print("Receive Key Message, %d\r\n", key_id);
