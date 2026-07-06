@@ -26,6 +26,7 @@ extern "C"
 // Controller interface
 
 extern adc_channel_t input_wave_adc;//adc init后，变量在头文件再声明
+extern ctrl_gt comp_out;//再声明
 
 // Input Callback
 GMP_STATIC_INLINE void ctl_input_callback(void)
@@ -45,13 +46,14 @@ GMP_STATIC_INLINE void ctl_output_callback(void)
     //EPWM_setCounterCompareValue(IRIS_EPWM1_BASE, EPWM_COUNTER_COMPARE_A, 1500);
     static uint32_t tick = 0;
 
-        tick += 1;
+    tick += 1;
 
-        ctrl_gt output_signal = (tick % 20000) / 20000.0f * 100;
-        //1.65V+1.65/2 sin(100*2/pi * t)
-        DAC_setShadowValue(IRIS_DACA_BASE, ctl_sin(output_signal) * 1024 + 2048);
+    ctrl_gt output_signal = (tick % 20000) / 20000.0f * 100;
+    //1.65V+1.65/2 sin(100*2/pi * t)
+    DAC_setShadowValue(IRIS_DACA_BASE, ctl_sin(output_signal) * 1024 + 2048);
     //DAC_setShadowValue(IRIS_DACB_BASE, iuvw.control_port.value.dat[phase_C] * 2048 + 2048);
 
+    DAC_setShadowValue(IRIS_DACB_BASE, comp_out * 1024 + 2048);
 }
 
 // function prototype
