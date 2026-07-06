@@ -121,7 +121,7 @@ void setup_peripheral(void)
 
 
     //ADC INIT
-    ctl_init_adc_channel(&input_wave_adc,4.0f,0.5f，12,24);//初始化，3.3V->1,1.65V/2为单位1标幺，相当于增益为4
+    ctl_init_adc_channel(&input_wave_adc,4.0f,0.5f,12,24);//初始化，3.3V->1,1.65V/2为单位1标幺，相当于增益为4
 }
 
 

@@ -230,8 +230,9 @@
 //#define MOTOR_IV
 //#define MOTOR_IW
 
-#define INPUT_WAVE_RESULT_REG ADC_CH1_RESULT_BASE;
-#define INPUT_WAVE ADC_CH1;
+//ADC define
+#define INPUT_WAVE_RESULT_REG ADC_CH1_RESULT_BASE
+#define INPUT_WAVE ADC_CH1
 
 // System LED
 #define SYSTEM_LED      IRIS_LED1
