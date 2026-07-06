@@ -60,7 +60,6 @@ const spi2           = spi.addInstance();
  * Write custom configuration values to the imported modules.
  */
 adc1.$name                          = "IRIS_ADCA";
-adc1.adcClockPrescaler              = "ADC_CLK_DIV_2_0";
 adc1.enabledInts                    = ["ADC_INT_NUMBER1"];
 adc1.enableInterrupt1               = true;
 adc1.enableInterrupt1ContinuousMode = true;
@@ -91,6 +90,7 @@ adc1.soc3Name                       = "ADC_CH12";
 adc1.soc1Channel                    = "ADC_CH_ADCIN3";
 adc1.soc2Channel                    = "ADC_CH_ADCIN12";
 adc1.soc3Channel                    = "ADC_CH_ADCIN7";
+adc1.adcClockPrescaler              = "ADC_CLK_DIV_2_0";
 adc1.adcInt1.interruptHandler       = "MainISR";
 adc1.adcInt1.enableInterrupt        = true;
 
@@ -223,6 +223,9 @@ divider4.divideValue = 2;
 
 const divider5       = system.clockTree["PLL_REFDIV"];
 divider5.divideValue = 4;
+
+const divider6       = system.clockTree["SYSCLKDIVSEL"];
+divider6.divideValue = 1;
 
 const multiplier1         = system.clockTree["PLL_IMULT"];
 multiplier1.multiplyValue = 80;

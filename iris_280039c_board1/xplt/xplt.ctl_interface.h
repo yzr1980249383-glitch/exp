@@ -56,8 +56,9 @@ GMP_STATIC_INLINE void ctl_output_callback(void)
     //DAC_setShadowValue(IRIS_DACB_BASE, iuvw.control_port.value.dat[phase_C] * 2048 + 2048);
 
     DAC_setShadowValue(IRIS_DACB_BASE, comp_out * 1024 + 2048);
-
-    ctl_step_pwm_channel (&output_pwm_1, (comp_out + 1.0f)/2);//PWMÊä³ö
+    if(comp_out > 1.0f) ctl_step_pwm_channel (&output_pwm_1, (1.0f + 1.0f)/2);
+    if(comp_out < 1.0f) ctl_step_pwm_channel (&output_pwm_1, (-1.0f + 1.0f)/2);
+    else ctl_step_pwm_channel (&output_pwm_1, (comp_out + 1.0f)/2);//PWMÊä³ö
     EPWM_setCounterCompareValue(IRIS_EPWM1_BASE, EPWM_COUNTER_COMPARE_A, output_pwm_1.value);
 }
 
